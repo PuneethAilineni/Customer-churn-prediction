@@ -76,7 +76,7 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-research/
+research/*
 .ipynb_checkpoints
 
 # IPython
@@ -217,3 +217,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+artifacts/*
