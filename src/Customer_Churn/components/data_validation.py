@@ -12,7 +12,6 @@ class DataValidation:
             validation_status = True
 
             data = pd.read_csv(self.config.unzip_dir)
-            data = data.drop("customer_id", axis = 1)
             all_cols = list(data.columns)
 
             all_schema = self.config.all_schema.keys()
