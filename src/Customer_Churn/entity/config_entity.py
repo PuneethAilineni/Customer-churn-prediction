@@ -1,4 +1,4 @@
-from Customer_Churn.config.configuration import DataIngestionConfig, DataValidationConfig
+from Customer_Churn.config.configuration import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 from Customer_Churn.utils.common import read_yaml, create_directories
 from Customer_Churn.constants import *
 
@@ -39,3 +39,14 @@ class ConfigurationManager:
             all_schema = schema
         )
         return data_validation_config
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+        
+        data_tranformation_config = DataTransformationConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path
+        )
+        return data_tranformation_config
