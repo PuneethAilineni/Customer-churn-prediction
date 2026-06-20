@@ -5,7 +5,6 @@ from Customer_Churn import Logger
 stage_name = 'Data Ingestion stage'
 
 class DataIngestionTrainingPipeline:
-
     def __init__(self):
         pass
 
