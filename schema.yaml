@@ -1,1 +1,15 @@
-key: val
+COLUMNS:
+ credit_score: int64
+ country: str    
+ gender: str    
+ age: int64  
+ tenure: int64  
+ balance: float64
+ products_number: int64  
+ credit_card: int64  
+ active_member: int64  
+ estimated_salary: float64
+ churn: int64  
+
+TARGET_COLUMN:
+ name: churn
