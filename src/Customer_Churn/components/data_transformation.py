@@ -8,6 +8,18 @@ class DataTransformation:
     def __init__(self, config:DataTransformationConfig):
         self.config = config
 
+    def feature_encoding(self, data) -> pd:
+        encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+
+        categorical_cols = ['country', 'gender']
+        encoded_array = encoder.fit_transform(data[categorical_cols])
+
+        encoded_cols = encoder.get_feature_names_out(categorical_cols)
+        encoded_df = pd.DataFrame(encoded_array, columns=encoded_cols)
+
+        final_df = pd.concat([data.drop(columns=categorical_cols), encoded_df], axis=1)
+        return final_df
+
     def feature_engineering(self, data) -> pd:
         data["balance_salary_ratio"] = (data["balance"] / (data["estimated_salary"] + 1))
         data["is_senior"] = (data["age"] > 60).astype(int)
@@ -25,6 +37,9 @@ class DataTransformation:
 
         # feature selection
         data = self.feature_selection(data)
+
+        #feature encoding
+        data = self.feature_encoding(data)
 
         # train test split
         train, test = train_test_split(data, test_size=0.2, random_state=42)
