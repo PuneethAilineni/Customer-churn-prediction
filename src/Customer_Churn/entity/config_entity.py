@@ -1,4 +1,4 @@
-from Customer_Churn.config.configuration import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from Customer_Churn.config.configuration import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
 from Customer_Churn.utils.common import read_yaml, create_directories
 from Customer_Churn.constants import *
 
@@ -50,3 +50,32 @@ class ConfigurationManager:
             data_path = config.data_path
         )
         return data_tranformation_config
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config = self.config.model_trainer
+        schema = self.schema.TARGET_COLUMN
+        params = self.params.XGBoost
+
+        create_directories([config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir = config.root_dir,
+            train_data_path = config.train_data_path,
+            test_data_path = config.test_data_path,
+            model_name = config.model_name,
+            objective = params.objective,
+            eval_metric = params.eval_metric,
+            scale_pos_weight = params.scale_pos_weight,
+            early_stopping_rounds = params.early_stopping_rounds,
+            n_estimators = params.n_estimators,
+            max_depth = params.max_depth,
+            learning_rate = params.learning_rate,
+            subsample = params.subsample,
+            colsample_bytree = params.colsample_bytree,
+            min_child_weight = params.min_child_weight,
+            gamma = params.gamma,
+            reg_alpha = params.reg_alpha,
+            reg_lambda = params.reg_lambda,
+            target_column = schema.name
+        )
+        return model_trainer_config
