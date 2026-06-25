@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from Customer_Churn.config.configuration import DataTransformationConfig
@@ -12,6 +13,11 @@ class DataTransformation:
 
         categorical_cols = ['country', 'gender']
         encoded_array = encoder.fit_transform(data[categorical_cols])
+
+        # Save the fitted encoder inside data transformation artifacts directory
+        encoder_path = os.path.join(self.config.root_dir, 'encoder.joblib')
+        joblib.dump(encoder, encoder_path)
+        print(f"Saved fitted encoder to {encoder_path}")
 
         encoded_cols = encoder.get_feature_names_out(categorical_cols)
         encoded_df = pd.DataFrame(encoded_array, columns=encoded_cols)
