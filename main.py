@@ -3,6 +3,7 @@ from Customer_Churn.pipeline.data_ingestion_pipeline import DataIngestionTrainin
 from Customer_Churn.pipeline.data_validation_pipeline import DataValidationTrainingPipeline
 from Customer_Churn.pipeline.data_transformation_pipeline import DataTransformationTrainingPipeline
 from Customer_Churn.pipeline.model_training_pipeline import ModelTrainingPipeline
+from Customer_Churn.pipeline.model_evaluation_pipeline import ModelEvaluationPipeline
 
 stage_name = 'Data Ingestion stage'
 
@@ -43,6 +44,18 @@ if __name__ == '__main__':
     try:
         Logger.info(f">>> stage =>{stage_name} has started <<<")
         obj = ModelTrainingPipeline()
+        obj.main()
+        Logger.info(f">>> stage {stage_name} has ended <<<")
+    except Exception as e:
+        Logger.info(e)
+        raise e
+    
+stage_name = 'Model Evaluation stage'
+    
+if __name__ == '__main__':
+    try:
+        Logger.info(f">>> stage =>{stage_name} has started <<<")
+        obj = ModelEvaluationPipeline()
         obj.main()
         Logger.info(f">>> stage {stage_name} has ended <<<")
     except Exception as e:

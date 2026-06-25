@@ -45,3 +45,13 @@ class ModelTrainerConfig:
     reg_lambda: float
 
     target_column: str
+
+@dataclass(frozen = True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    test_data_path: Path
+    model_path: Path
+    metric_file_name: Path
+    all_parms: dict
+    target_column: str
+    mlflow_uri: str
