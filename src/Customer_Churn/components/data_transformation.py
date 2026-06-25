@@ -1,8 +1,7 @@
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
 from Customer_Churn.config.configuration import DataTransformationConfig
 class DataTransformation:
     def __init__(self, config:DataTransformationConfig):
@@ -26,14 +25,15 @@ class DataTransformation:
         return data 
 
     def feature_selection(self, data) -> pd:
-        data = data.drop(["customer_id", "age", "balance", "estimated_salary"], axis = 1)
+        # data = data.drop(["customer_id", "age", "balance", "estimated_salary"], axis = 1)
+        data = data.drop(["customer_id",], axis = 1)
         return data
 
     def transform(self):
         data = pd.read_csv(self.config.data_path)
 
         # featuer engineering
-        data = self.feature_engineering(data)
+        # data = self.feature_engineering(data)
 
         # feature selection
         data = self.feature_selection(data)
@@ -42,7 +42,7 @@ class DataTransformation:
         data = self.feature_encoding(data)
 
         # train test split
-        train, test = train_test_split(data, test_size=0.2, random_state=42)
+        train, test = train_test_split(data, test_size=0.2, stratify = data["churn"], random_state=42)
         train.to_csv(os.path.join(self.config.root_dir, "train.csv"), index = False)
         test.to_csv(os.path.join(self.config.root_dir, "test.csv"), index = False)
 
